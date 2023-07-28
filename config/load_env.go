@@ -7,12 +7,11 @@ import (
 )
 
 type Config struct {
-	DatabaseUser       string `mapstructure:"DB_USER"`
-	DatabasePassword   string `mapstructure:"DB_PASSWORD"`
-	DatabaseName       string `mapstructure:"DB_NAME"`
-	DatabaseCollection string `mapstructure:"DB_COLLECTION"`
-	DatabasePort       string `mapstructure:"DB_PORT"`
-	DatabaseHost       string `mapstructure:"DB_HOST"`
+	DatabaseUser     string `mapstructure:"DB_USER"`
+	DatabasePassword string `mapstructure:"DB_PASSWORD"`
+	DatabaseName     string `mapstructure:"DB_NAME"`
+	DatabasePort     string `mapstructure:"DB_PORT"`
+	DatabaseHost     string `mapstructure:"DB_HOST"`
 }
 
 func LoadConfig(path string) (config Config, err error) {
