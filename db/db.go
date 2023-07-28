@@ -19,7 +19,7 @@ type MongoInstance struct {
 var MI MongoInstance
 var ctx = context.TODO()
 
-func ConnectDatabase(config *config.Config) {
+func ConnectDatabase(config *config.Config) *mongo.Database {
 	uri := getUri(*config)
 
 	clientOptions := options.Client().ApplyURI(uri)
@@ -35,15 +35,7 @@ func ConnectDatabase(config *config.Config) {
 		helper.ErrorPanic(err)
 	}
 
-	transactionCollection := client.Database(config.DatabaseName).Collection(config.DatabaseCollection)
-	// blockCollection := client.Database(config.DatabaseName).Collection(config.DatabaseCollection)
-
-	MI = MongoInstance{
-		Client:           client,
-		DB:               client.Database(config.DatabaseName),
-		CryptoCollection: transactionCollection,
-	}
-
+	return client.Database(config.DatabaseName)
 }
 
 func getUri(config config.Config) string {

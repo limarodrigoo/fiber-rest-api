@@ -22,17 +22,15 @@ func main() {
 		log.Fatal("could not load enviroment variables", err)
 	}
 
-	db.ConnectDatabase(&loadConfig)
-
-	DB := *db.MI.DB
+	db := db.ConnectDatabase(&loadConfig)
 
 	app := fiber.New()
 
 	app.Use(cors.New())
 	app.Use(logger.New())
-	transactionsRepo := repository.NewTransactionsRepository(DB)
-	blocksRepo := repository.NewBlocksRepository(DB)
-	addressRepo := repository.NewAddressRepository(DB)
+	transactionsRepo := repository.NewTransactionsRepository(*db)
+	blocksRepo := repository.NewBlocksRepository(*db)
+	addressRepo := repository.NewAddressRepository(*db)
 
 	transactionsController := controllers.NewTransactionsController(transactionsRepo, blocksRepo, addressRepo)
 	blocksController := controllers.NewBlocksController(blocksRepo, transactionsRepo)
@@ -44,5 +42,4 @@ func main() {
 	blocksRoutes.Install(app)
 
 	log.Fatal(app.Listen(":3000"))
-
 }
