@@ -429,6 +429,39 @@ This project is an API developed using the Go language, Fiber framework, and Mon
     "deleted": true
 }
 ```
+### Update Block
+
+- **Endpoint:** `DELETE /block/:hash`
+- **Description:** Deletes a specific block using its hash value.
+- **Request Body:**
+```
+{
+    "hash": "00000000000000000003b515577b2cef0c09f6904d9e54d33f94c217d1632a2d",
+        "ver": 2134,
+        "prev_block": "00000000000000000004a8c9df7718c31c4197cac3462ecf91d8d7cf67d0081a",
+        "mrkl_root": "66c3ba4f179de8ff69df4f69bce9e57636726f77e0238b5cd10b2b6bf5b25e4d",
+        "time": 1690518134,
+        "bits": 386228482,
+        "next_block": [
+            "00000000000000000004bad741a36edb3de5b9860bf71533fd5141114c4228d4"
+        ],
+        "fee": 0,
+        "nonce": 3105056281,
+        "n_tx": 3410,
+        "size": 1615722,
+        "block_index": 800566,
+        "main_chain": true,
+        "height": 800566,
+        "weight": 3992808
+}
+```
+- **Example Response:**:
+```
+{
+    "updated": true
+}
+```
+
 ### Delete Transaction by Hash
 
 - **Endpoint:** `DELETE /transaction/:hash`
@@ -437,7 +470,7 @@ This project is an API developed using the Go language, Fiber framework, and Mon
 
 ```
 {
-"deleted": true
+    "deleted": true
 }
 ```
 
