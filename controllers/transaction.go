@@ -15,6 +15,7 @@ type TransactionController interface {
 	FindTransactionByBlock(ctx *fiber.Ctx) error
 	FindTransactionByAddress(ctx *fiber.Ctx) error
 	DeleteTransaction(ctx *fiber.Ctx) error
+	AddTransaction(ctx *fiber.Ctx) error
 	Update(ctx *fiber.Ctx) error
 }
 
@@ -131,7 +132,29 @@ func (t *transactionController) FindTransactionByAddress(ctx *fiber.Ctx) error {
 			"data": address.Tx,
 		})
 	}
+}
 
+func (t *transactionController) AddTransaction(ctx *fiber.Ctx) error {
+	var newTransaction models.Transaction
+	err := ctx.BodyParser(&newTransaction)
+	if err != nil {
+		return ctx.
+			Status(fiber.StatusUnprocessableEntity).
+			JSON(fiber.Map{
+				"error": err.Error(),
+			})
+	}
+	err = t.transactionRepo.SaveTransaction(newTransaction)
+	if err != nil {
+		return ctx.
+			Status(fiber.StatusBadRequest).
+			JSON(fiber.Map{
+				"error": err.Error(),
+			})
+	}
+	return ctx.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"created": true,
+	})
 }
 
 func (t *transactionController) Update(ctx *fiber.Ctx) error {
