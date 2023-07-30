@@ -1,6 +1,6 @@
 # API Project Readme
 
-This project is an API developed using the Go language, Fiber framework, and MongoDB to manage transactions data. The API provides several endpoints to interact with transaction information stored in the database. Below are the details of each endpoint and the expected responses.
+This project is an API developed using the Go language, Fiber framework, and MongoDB to manage bitcoin transactions data. The API provides several endpoints to interact with transaction information stored in the database consumed of [Blockchain](https://www.blockchain.com/)'s API. Below are the details of each endpoint and the expected responses.
 
 ## Endpoints
 
