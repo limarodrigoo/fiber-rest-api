@@ -19,4 +19,5 @@ func (b *blocksRoutes) Install(app *fiber.App) {
 	app.Get("/blocks", b.blocksController.FindAllBlocks)
 	app.Get("/block/:hash", b.blocksController.FindBlocksByHash)
 	app.Delete("/block/:hash", b.blocksController.DeleteBlock)
+	app.Put("/block", b.blocksController.UpdateBlock)
 }
