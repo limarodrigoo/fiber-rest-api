@@ -20,5 +20,6 @@ func (t *transactionRoutes) Install(app *fiber.App) {
 	app.Get("/transaction/:hash", t.transactionsController.FindTransactionByHash)
 	app.Get("/transactions/by-block/:hash", t.transactionsController.FindTransactionByBlock)
 	app.Get("/transactions/by-address/:address", t.transactionsController.FindTransactionByAddress)
+	app.Post("/transaction", t.transactionsController.AddTransaction)
 	app.Delete("/transaction/:hash", t.transactionsController.DeleteTransaction)
 }
