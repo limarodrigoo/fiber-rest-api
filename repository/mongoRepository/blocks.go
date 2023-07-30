@@ -74,6 +74,34 @@ func (b *blockRepository) Save(block models.Block) error {
 	return nil
 }
 
-func (b *blockRepository) Update(block *models.Block) error {
-	panic("unimplemented")
+func (b *blockRepository) Update(blockUpdate models.Block) error {
+	filter := bson.D{{Key: "hash", Value: blockUpdate.Hash}}
+	update := bson.M{
+		"$set": bson.M{
+			"ver":         blockUpdate.Ver,
+			"prev_block":  blockUpdate.PrevBlock,
+			"mrkl_root":   blockUpdate.MrklRoot,
+			"time":        blockUpdate.Time,
+			"bits":        blockUpdate.Bits,
+			"next_block":  blockUpdate.NextBlock,
+			"fee":         blockUpdate.Fee,
+			"nonce":       blockUpdate.Nonce,
+			"n_tx":        blockUpdate.Ntx,
+			"size":        blockUpdate.Size,
+			"block_index": blockUpdate.BlockIndex,
+			"main_chain":  blockUpdate.MainChain,
+			"height":      blockUpdate.Height,
+			"weight":      blockUpdate.Weight,
+		},
+	}
+	_, err := b.c.UpdateOne(context.TODO(), filter, update)
+
+	if err != nil {
+		if err.Error() == mongo.ErrNoDocuments.Error() {
+			return err
+		}
+		helper.ErrorPanic(err)
+	}
+
+	return nil
 }
