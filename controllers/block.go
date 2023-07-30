@@ -53,7 +53,6 @@ func (b *blockController) FindAllBlocks(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
 		"data": result,
 	})
-
 }
 
 func (b *blockController) FindBlocksByHash(ctx *fiber.Ctx) error {
@@ -90,5 +89,25 @@ func (b *blockController) FindBlocksByHash(ctx *fiber.Ctx) error {
 }
 
 func (b *blockController) UpdateBlock(ctx *fiber.Ctx) error {
-	panic("unimplemented")
+	var body models.Block
+	err := ctx.BodyParser(&body)
+
+	if err != nil {
+		return ctx.
+			Status(fiber.StatusUnprocessableEntity).
+			JSON(fiber.Map{
+				"error": err.Error(),
+			})
+	}
+	err = b.blockRepo.Update(body)
+	if err != nil {
+		return ctx.
+			Status(fiber.StatusBadRequest).
+			JSON(fiber.Map{
+				"error": err.Error(),
+			})
+	}
+	return ctx.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"updated": true,
+	})
 }
