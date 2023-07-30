@@ -93,15 +93,15 @@ func (mr *MockBlockRepositoryMockRecorder) Save(block interface{}) *gomock.Call 
 }
 
 // Update mocks base method.
-func (m *MockBlockRepository) Update(block *models.Block) error {
+func (m *MockBlockRepository) Update(blocksUpdate models.Block) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", block)
+	ret := m.ctrl.Call(m, "Update", blocksUpdate)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Update indicates an expected call of Update.
-func (mr *MockBlockRepositoryMockRecorder) Update(block interface{}) *gomock.Call {
+func (mr *MockBlockRepositoryMockRecorder) Update(blocksUpdate interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockBlockRepository)(nil).Update), block)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockBlockRepository)(nil).Update), blocksUpdate)
 }
