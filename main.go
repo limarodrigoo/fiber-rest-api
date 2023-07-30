@@ -6,7 +6,7 @@ import (
 	"rest-api/config"
 	"rest-api/controllers"
 	"rest-api/db"
-	"rest-api/repository"
+	mongorepository "rest-api/repository/mongoRepository"
 	"rest-api/routes"
 
 	"github.com/gofiber/fiber/v2"
@@ -28,9 +28,9 @@ func main() {
 
 	app.Use(cors.New())
 	app.Use(logger.New())
-	transactionsRepo := repository.NewTransactionsRepository(*db)
-	blocksRepo := repository.NewBlocksRepository(*db)
-	addressRepo := repository.NewAddressRepository(*db)
+	transactionsRepo := mongorepository.NewTransactionsRepository(*db)
+	blocksRepo := mongorepository.NewBlocksRepository(*db)
+	addressRepo := mongorepository.NewAddressRepository(*db)
 
 	transactionsController := controllers.NewTransactionsController(transactionsRepo, blocksRepo, addressRepo)
 	blocksController := controllers.NewBlocksController(blocksRepo, transactionsRepo)
