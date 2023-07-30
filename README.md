@@ -1,82 +1,52 @@
-# FIBER REST API
-> Simple REST API using GO Lang, Fiber and MONGO!
+# API Project Readme
 
-A API with CRUD of Bitcoin's Transactions consuming [Blockchain.com](Blockchain.com)'s API
+This project is an API developed using the Go language, Fiber framework, and MongoDB to manage transactions data. The API provides several endpoints to interact with transaction information stored in the database. Below are the details of each endpoint and the expected responses.
 
-## Installing / Getting started
+## Endpoints
 
-To run this project you must have GO installed and a MongoDB running!
+### Get All Transactions
 
-```shell
-git clone https://github.com/limarodrigoo/fiber-rest-api.git
-cd fiber-rest-api
-go mod tidy  # install's all packages
-```
-
-
-### Initial Configuration
-
-For this projects you need to create a app.env file that contains your configurations of MONGO:
-```shell
-    DB_HOST=127.0.0.1
-    DB_USER=mongo
-    DB_PASSWORD=1234
-    DB_NAME=cryptos
-    DB_PORT=27017
-```
-
-## Running
-
-```shell
-go run main.go
-```
-
-### End points
-
-### GET /transactions/
-Get all transactions `transactions on db only`
-
-**Response**
+- **Endpoint:** `GET /transactions`
+- **Description:** Retrieves a list of all transactions stored in the database.
+- **Example Response:**
 
 ```
-// Array of transactions on db
-{
-    "data": [
+"data": [
         {
-            "hash": "e8fb9e06e8bcc16b695c5b2e8e39f9afafd80beb7dee0b1cb34caa375b1e3d0e",
+            "hash": "96145f1d41235a760b5e44697303c457689ad312770c9664b66b6e1932437f04",
             "ver": 1,
             "vin_sz": 1,
             "vout_sz": 2,
-            "size": 207,
-            "weight": 720,
-            "fee": 0,
+            "size": 382,
+            "weight": 766,
+            "fee": 90000,
             "relayed_by": "0.0.0.0",
             "lock_time": 0,
-            "tx_index": 500981282829641,
+            "tx_index": 158228310863309,
             "double_spend": false,
-            "time": 1690518134,
+            "time": 1690517773,
             "block_index": 800566,
             "block_height": 800566,
             "inputs": [
                 {
                     "sequence": 4294967295,
-                    "witness": "01200000000000000000000000000000000000000000000000000000000000000000",
-                    "script": "0336370c0b2f4d61726120506f6f6c2f1a01000200000003000000181fa5b2050000008f010000",
+                    "witness": "0400473044022012134fd89bb8da04a7c19022fcdadf7fdf1c51d193359894bf484c4b9207780f022037a66e1f3e17ce206aea73c0255ba099c5c5af59056e52c339958a6f370fec8b014730440220388d55450fef3ee9d26c70aa60bc969b4a877879b0ae0330e796f6dc03ca6cdf02204d8b2bb3bdcbf2f6b693d1e88d75b845d39e04a26be88d90f834c207a0f9d6b4016952210375e00eb72e29da82b89367947f29ef34afb75e8654f6ea368e0acdfd92976b7c2103a1b26313f430c4b15bb1fdce663207659d8cac749a0e53d70eff01874496feff2103c96d495bfdd5ba4145e3e046fee45e84a8a48ad05bd8dbb395c011a32cf9f88053ae",
+                    "script": "",
                     "index": 0,
                     "prev_out": {
-                        "addr": "",
-                        "n": 4294967295,
-                        "script": "",
+                        "addr": "bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej",
+                        "n": 4,
+                        "script": "0020701a8d401c84fb13e6baf169d59684e17abd9fa216c8cc5b9fc63d622ff8c58d",
                         "spending_outpoints": [
                             {
-                                "tx_index": 500981282829641,
+                                "tx_index": 158228310863309,
                                 "n": 0
                             }
                         ],
                         "spent": true,
-                        "tx_index": 0,
+                        "tx_index": 3369726711104028,
                         "type": 0,
-                        "value": 0
+                        "value": 210155170
                     }
                 }
             ],
@@ -84,105 +54,302 @@ Get all transactions `transactions on db only`
                 {
                     "type": 0,
                     "spent": false,
-                    "value": 636721454,
+                    "value": 24542995,
                     "spending_outpoints": [],
                     "n": 0,
-                    "tx_index": 500981282829641,
-                    "script": "76a9142fc701e2049ee4957b07134b6c1d771dd5a96b2188ac",
-                    "addr": "15MdAHnkxt9TMC2Rj595hsg8Hnv693pPBB"
+                    "tx_index": 158228310863309,
+                    "script": "76a91490c5c51fc30b04eafb80c91103a7c1a2f3d38ac588ac",
+                    "addr": "1ECVDvfKw74jyD9HYxTFZYSyqVWGB5x7cp"
                 },
                 {
                     "type": 0,
-                    "spent": false,
-                    "value": 0,
-                    "spending_outpoints": [],
-                    "n": 1,
-                    "tx_index": 500981282829641,
-                    "script": "6a24aa21a9edd60c498b28aa8c05acad9ed34ab63a80654c176134274b674a52e70b8c3013bf",
-                    "addr": ""
-                }
-            ]
-        },
-    ]
-}    
-
-```
-
-### /transaction/$hash
-Get transactions by hash
-
-**Parameters**
-
-|          Name | Required |  Type   | Description                                                                                                                                                           |
-| -------------:|:--------:|:-------:| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|     `hash` | required | string  | The hash of the transaction                                  |
-
-**Response**
-
-```
-// Transaction
-{
-    "data": {
-        "hash": "e8fb9e06e8bcc16b695c5b2e8e39f9afafd80beb7dee0b1cb34caa375b1e3d0e",
-        "ver": 1,
-        "vin_sz": 1,
-        "vout_sz": 2,
-        "size": 207,
-        "weight": 720,
-        "fee": 0,
-        "relayed_by": "0.0.0.0",
-        "lock_time": 0,
-        "tx_index": 500981282829641,
-        "double_spend": false,
-        "time": 1690518134,
-        "block_index": 800566,
-        "block_height": 800566,
-        "inputs": [
-            {
-                "sequence": 4294967295,
-                "witness": "01200000000000000000000000000000000000000000000000000000000000000000",
-                "script": "0336370c0b2f4d61726120506f6f6c2f1a01000200000003000000181fa5b2050000008f010000",
-                "index": 0,
-                "prev_out": {
-                    "addr": "",
-                    "n": 4294967295,
-                    "script": "",
+                    "spent": true,
+                    "value": 185522175,
                     "spending_outpoints": [
                         {
-                            "tx_index": 500981282829641,
+                            "tx_index": 4162255667144669,
                             "n": 0
                         }
                     ],
-                    "spent": true,
-                    "tx_index": 0,
-                    "type": 0,
-                    "value": 0
+                    "n": 1,
+                    "tx_index": 158228310863309,
+                    "script": "0020701a8d401c84fb13e6baf169d59684e17abd9fa216c8cc5b9fc63d622ff8c58d",
+                    "addr": "bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej"
                 }
-            }
-        ],
-        "out": [
-            {
-                "type": 0,
-                "spent": false,
-                "value": 636721454,
-                "spending_outpoints": [],
-                "n": 0,
-                "tx_index": 500981282829641,
-                "script": "76a9142fc701e2049ee4957b07134b6c1d771dd5a96b2188ac",
-                "addr": "15MdAHnkxt9TMC2Rj595hsg8Hnv693pPBB"
-            },
-            {
-                "type": 0,
-                "spent": false,
-                "value": 0,
-                "spending_outpoints": [],
-                "n": 1,
-                "tx_index": 500981282829641,
-                "script": "6a24aa21a9edd60c498b28aa8c05acad9ed34ab63a80654c176134274b674a52e70b8c3013bf",
-                "addr": ""
-            }
-        ]
-    }
-}
+            ]
+        },
+]
+```
+
+
+### Get Transaction by Hash
+
+- **Endpoint:** `GET /transaction/:hash`
+- **Description:** Retrieves a specific transaction using its hash value.
+- **Example Response:**
 
 ```
+"data": 
+        {
+            "hash": "96145f1d41235a760b5e44697303c457689ad312770c9664b66b6e1932437f04",
+            "ver": 1,
+            "vin_sz": 1,
+            "vout_sz": 2,
+            "size": 382,
+            "weight": 766,
+            "fee": 90000,
+            "relayed_by": "0.0.0.0",
+            "lock_time": 0,
+            "tx_index": 158228310863309,
+            "double_spend": false,
+            "time": 1690517773,
+            "block_index": 800566,
+            "block_height": 800566,
+            "inputs": [
+                {
+                    "sequence": 4294967295,
+                    "witness": "0400473044022012134fd89bb8da04a7c19022fcdadf7fdf1c51d193359894bf484c4b9207780f022037a66e1f3e17ce206aea73c0255ba099c5c5af59056e52c339958a6f370fec8b014730440220388d55450fef3ee9d26c70aa60bc969b4a877879b0ae0330e796f6dc03ca6cdf02204d8b2bb3bdcbf2f6b693d1e88d75b845d39e04a26be88d90f834c207a0f9d6b4016952210375e00eb72e29da82b89367947f29ef34afb75e8654f6ea368e0acdfd92976b7c2103a1b26313f430c4b15bb1fdce663207659d8cac749a0e53d70eff01874496feff2103c96d495bfdd5ba4145e3e046fee45e84a8a48ad05bd8dbb395c011a32cf9f88053ae",
+                    "script": "",
+                    "index": 0,
+                    "prev_out": {
+                        "addr": "bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej",
+                        "n": 4,
+                        "script": "0020701a8d401c84fb13e6baf169d59684e17abd9fa216c8cc5b9fc63d622ff8c58d",
+                        "spending_outpoints": [
+                            {
+                                "tx_index": 158228310863309,
+                                "n": 0
+                            }
+                        ],
+                        "spent": true,
+                        "tx_index": 3369726711104028,
+                        "type": 0,
+                        "value": 210155170
+                    }
+                }
+            ],
+            "out": [
+                {
+                    "type": 0,
+                    "spent": false,
+                    "value": 24542995,
+                    "spending_outpoints": [],
+                    "n": 0,
+                    "tx_index": 158228310863309,
+                    "script": "76a91490c5c51fc30b04eafb80c91103a7c1a2f3d38ac588ac",
+                    "addr": "1ECVDvfKw74jyD9HYxTFZYSyqVWGB5x7cp"
+                },
+                {
+                    "type": 0,
+                    "spent": true,
+                    "value": 185522175,
+                    "spending_outpoints": [
+                        {
+                            "tx_index": 4162255667144669,
+                            "n": 0
+                        }
+                    ],
+                    "n": 1,
+                    "tx_index": 158228310863309,
+                    "script": "0020701a8d401c84fb13e6baf169d59684e17abd9fa216c8cc5b9fc63d622ff8c58d",
+                    "addr": "bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej"
+                }
+            ]
+        }
+```
+
+### Get Transactions by Block Hash
+
+- **Endpoint:** `GET /transactions/by-block/:hash`
+- **Description:** Retrieves a list of transactions associated with a specific block hash.
+- **Example Response:**
+
+```
+"data": [
+        {
+            "hash": "96145f1d41235a760b5e44697303c457689ad312770c9664b66b6e1932437f04",
+            "ver": 1,
+            "vin_sz": 1,
+            "vout_sz": 2,
+            "size": 382,
+            "weight": 766,
+            "fee": 90000,
+            "relayed_by": "0.0.0.0",
+            "lock_time": 0,
+            "tx_index": 158228310863309,
+            "double_spend": false,
+            "time": 1690517773,
+            "block_index": 800566,
+            "block_height": 800566,
+            "inputs": [
+                {
+                    "sequence": 4294967295,
+                    "witness": "0400473044022012134fd89bb8da04a7c19022fcdadf7fdf1c51d193359894bf484c4b9207780f022037a66e1f3e17ce206aea73c0255ba099c5c5af59056e52c339958a6f370fec8b014730440220388d55450fef3ee9d26c70aa60bc969b4a877879b0ae0330e796f6dc03ca6cdf02204d8b2bb3bdcbf2f6b693d1e88d75b845d39e04a26be88d90f834c207a0f9d6b4016952210375e00eb72e29da82b89367947f29ef34afb75e8654f6ea368e0acdfd92976b7c2103a1b26313f430c4b15bb1fdce663207659d8cac749a0e53d70eff01874496feff2103c96d495bfdd5ba4145e3e046fee45e84a8a48ad05bd8dbb395c011a32cf9f88053ae",
+                    "script": "",
+                    "index": 0,
+                    "prev_out": {
+                        "addr": "bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej",
+                        "n": 4,
+                        "script": "0020701a8d401c84fb13e6baf169d59684e17abd9fa216c8cc5b9fc63d622ff8c58d",
+                        "spending_outpoints": [
+                            {
+                                "tx_index": 158228310863309,
+                                "n": 0
+                            }
+                        ],
+                        "spent": true,
+                        "tx_index": 3369726711104028,
+                        "type": 0,
+                        "value": 210155170
+                    }
+                }
+            ],
+            "out": [
+                {
+                    "type": 0,
+                    "spent": false,
+                    "value": 24542995,
+                    "spending_outpoints": [],
+                    "n": 0,
+                    "tx_index": 158228310863309,
+                    "script": "76a91490c5c51fc30b04eafb80c91103a7c1a2f3d38ac588ac",
+                    "addr": "1ECVDvfKw74jyD9HYxTFZYSyqVWGB5x7cp"
+                },
+                {
+                    "type": 0,
+                    "spent": true,
+                    "value": 185522175,
+                    "spending_outpoints": [
+                        {
+                            "tx_index": 4162255667144669,
+                            "n": 0
+                        }
+                    ],
+                    "n": 1,
+                    "tx_index": 158228310863309,
+                    "script": "0020701a8d401c84fb13e6baf169d59684e17abd9fa216c8cc5b9fc63d622ff8c58d",
+                    "addr": "bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej"
+                }
+            ]
+        },
+]
+```
+
+### Get Transactions by Address
+
+- **Endpoint:** `GET /transactions/by-address/:address`
+- **Description:** Retrieves a list of transactions associated with a specific address.
+- **Example Response:**
+
+```
+"data": [
+        {
+            "hash": "96145f1d41235a760b5e44697303c457689ad312770c9664b66b6e1932437f04",
+            "ver": 1,
+            "vin_sz": 1,
+            "vout_sz": 2,
+            "size": 382,
+            "weight": 766,
+            "fee": 90000,
+            "relayed_by": "0.0.0.0",
+            "lock_time": 0,
+            "tx_index": 158228310863309,
+            "double_spend": false,
+            "time": 1690517773,
+            "block_index": 800566,
+            "block_height": 800566,
+            "inputs": [
+                {
+                    "sequence": 4294967295,
+                    "witness": "0400473044022012134fd89bb8da04a7c19022fcdadf7fdf1c51d193359894bf484c4b9207780f022037a66e1f3e17ce206aea73c0255ba099c5c5af59056e52c339958a6f370fec8b014730440220388d55450fef3ee9d26c70aa60bc969b4a877879b0ae0330e796f6dc03ca6cdf02204d8b2bb3bdcbf2f6b693d1e88d75b845d39e04a26be88d90f834c207a0f9d6b4016952210375e00eb72e29da82b89367947f29ef34afb75e8654f6ea368e0acdfd92976b7c2103a1b26313f430c4b15bb1fdce663207659d8cac749a0e53d70eff01874496feff2103c96d495bfdd5ba4145e3e046fee45e84a8a48ad05bd8dbb395c011a32cf9f88053ae",
+                    "script": "",
+                    "index": 0,
+                    "prev_out": {
+                        "addr": "bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej",
+                        "n": 4,
+                        "script": "0020701a8d401c84fb13e6baf169d59684e17abd9fa216c8cc5b9fc63d622ff8c58d",
+                        "spending_outpoints": [
+                            {
+                                "tx_index": 158228310863309,
+                                "n": 0
+                            }
+                        ],
+                        "spent": true,
+                        "tx_index": 3369726711104028,
+                        "type": 0,
+                        "value": 210155170
+                    }
+                }
+            ],
+            "out": [
+                {
+                    "type": 0,
+                    "spent": false,
+                    "value": 24542995,
+                    "spending_outpoints": [],
+                    "n": 0,
+                    "tx_index": 158228310863309,
+                    "script": "76a91490c5c51fc30b04eafb80c91103a7c1a2f3d38ac588ac",
+                    "addr": "1ECVDvfKw74jyD9HYxTFZYSyqVWGB5x7cp"
+                },
+                {
+                    "type": 0,
+                    "spent": true,
+                    "value": 185522175,
+                    "spending_outpoints": [
+                        {
+                            "tx_index": 4162255667144669,
+                            "n": 0
+                        }
+                    ],
+                    "n": 1,
+                    "tx_index": 158228310863309,
+                    "script": "0020701a8d401c84fb13e6baf169d59684e17abd9fa216c8cc5b9fc63d622ff8c58d",
+                    "addr": "bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej"
+                }
+            ]
+        },
+]
+```
+
+### Delete Transaction by Hash
+
+- **Endpoint:** `DELETE /transaction/:hash`
+- **Description:** Deletes a specific transaction using its hash value.
+- **Example Response:**
+
+```
+{
+"deleted": true
+}
+```
+
+
+## Dependencies
+
+To run this API project, make sure you have the following dependencies installed:
+
+- Go (Programming Language)
+- Fiber (Web Framework)
+- MongoDB (Database)
+
+## How to Run
+
+1. Clone this repository to your local machine.
+2. Set up the MongoDB database and connection details.
+3. Navigate to the project's root directory.
+4. Run the following command to install dependencies:
+
+```
+go mod download
+```
+
+5. Build and run the project:
+
+```
+go run main.go
+```
+
+
+The API should now be running and accessible at `http://localhost:3000`.
+
