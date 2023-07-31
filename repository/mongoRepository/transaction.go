@@ -2,6 +2,7 @@ package mongorepository
 
 import (
 	"context"
+	"fmt"
 	"rest-api/helper"
 	"rest-api/models"
 	"rest-api/repository"
@@ -26,11 +27,7 @@ func (t *transactionRepository) DeleteTransaction(id string) error {
 
 	_, err := t.c.DeleteOne(context.TODO(), filter)
 
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func (t *transactionRepository) GetAllTransactions() (transaction []*models.Transaction, err error) {
@@ -99,10 +96,10 @@ func (t *transactionRepository) SaveTransaction(transaction models.Transaction) 
 	_, err := t.c.InsertOne(context.TODO(), transaction)
 
 	if err != nil {
-		helper.ErrorPanic(err)
+		fmt.Println("error:", err.Error())
 	}
 
-	return nil
+	return err
 }
 
 func (t *transactionRepository) BulkSaveTransaction(transactions []models.Transaction) error {
@@ -122,9 +119,9 @@ func (t *transactionRepository) BulkSaveTransaction(transactions []models.Transa
 		models = append(models, mongo.NewInsertOneModel().SetDocument(transaction))
 	}
 
-	t.c.BulkWrite(context.Background(), models, opts)
+	_, err := t.c.BulkWrite(context.Background(), models, opts)
 
-	return nil
+	return err
 }
 
 func (t *transactionRepository) UpdateTransaction(transaction *models.Transaction) error {

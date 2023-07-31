@@ -6,8 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func GetTransactionMongoData() models.TransactionMongoDB {
-	transactionTestData := models.TransactionMongoDB{
+func GetTransactionMongoData() models.Transaction {
+	transactionTestData := models.Transaction{
 		ID:          primitive.NewObjectID(),
 		Hash:        "e8fb9e06e8bcc16b695c5b2e8e39f9afafd80beb7dee0b1cb34caa375b1e3d0e",
 		Ver:         1,

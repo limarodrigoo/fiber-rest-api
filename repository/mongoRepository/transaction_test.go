@@ -124,7 +124,7 @@ func TestDeleteTransactionRepository(t *testing.T) {
 	})
 }
 
-func convertEntityToBson(transaction models.TransactionMongoDB) bson.D {
+func convertEntityToBson(transaction models.Transaction) bson.D {
 	return bson.D{
 		{Key: "_id", Value: transaction.ID},
 		{Key: "hash", Value: transaction.Hash},
