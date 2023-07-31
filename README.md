@@ -578,7 +578,6 @@ Make sure to replace <your_database_host>, <your_database_user>, <your_database_
 To run this API project, make sure you have the following dependencies installed:
 
 - Go (Programming Language)
-- Fiber (Web Framework)
 - MongoDB (Database)
 
 ## How to Run
